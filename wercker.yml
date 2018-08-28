@@ -14,7 +14,7 @@ push-to-releases:
     - internal/docker-push:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
-        repository: mankap/jscreditscore
+        repository: jagdeepsinghs/jscreditscore
         registry: $DOCKER_REGISTRY
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         cmd: node /pipeline/source/app.js
@@ -35,7 +35,7 @@ deploy-to-oke:
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_TOKEN
         insecure-skip-tls-verify: true
-        command: delete secret ocir --namespace=manish; echo delete registry secret     
+        command: delete secret ocir --namespace=default; echo delete registry secret     
         
     - script:
         name: wait to delete secret
@@ -57,7 +57,7 @@ deploy-to-oke:
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_TOKEN
         insecure-skip-tls-verify: true
-        command: apply -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=manish
+        command: apply -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=default
 
     - script:
         name: "Visualise Ingress config"
@@ -72,7 +72,7 @@ deploy-to-oke:
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_TOKEN
         insecure-skip-tls-verify: true
-        command: apply -f $WERCKER_ROOT/ingress.yml --namespace=manish
+        command: apply -f $WERCKER_ROOT/ingress.yml --namespace=default
     
     - script:
         name: wait 
